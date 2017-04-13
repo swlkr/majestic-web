@@ -1,9 +1,9 @@
-# majestic
+# majestic web
 
 ## Usage
 
 ```bash
-lein new majestic your-project-name
+lein new majestic-web your-project-name
 ```
 
 ## What Just Happened?
