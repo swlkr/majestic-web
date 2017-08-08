@@ -28,30 +28,47 @@
               :dev-secret (get-random-str 16)}]
     (main/info "Generating fresh 'lein new' majestic-web project.")
     (->files data
+
+             ; root folder
              [".gitignore" (render ".gitignore" data)]
-             ["src/{{sanitized}}/core.clj" (render "core.clj" data)]
-             ["src/{{sanitized}}/db.clj" (render "db.clj" data)]
-             ["test/{{sanitized}}/db_test.clj" (render "db_test.clj" data)]
-             ["src/{{sanitized}}/env.clj" (render "env.clj" data)]
-             ["resources/migrations/{{hstore-mig}}" (render "hstore-mig.edn" data)]
-             ["src/{{sanitized}}/responses.clj" (render "responses.clj" data)]
-             ["src/{{sanitized}}/components.clj" (render "components.clj" data)]
-             ["src/{{sanitized}}/middleware.clj" (render "middleware.clj" data)]
              ["Procfile" (render "Procfile" data)]
              ["profiles.clj" (render "profiles.clj" data)]
              ["project.clj" (render "project.clj" data)]
              ["README.md" (render "README.md" data)]
-             ["src/{{sanitized}}/routes.clj" (render "routes.clj" data)]
-             ["src/{{sanitized}}/routes/home.clj" (render "home.clj" data)]
-             ["src/{{sanitized}}/routes/login.clj" (render "login.clj" data)]
-             ["src/{{sanitized}}/routes/logout.clj" (render "logout.clj" data)]
-             ["src/{{sanitized}}/routes/signup.clj" (render "signup.clj" data)]
-             ["test/{{sanitized}}/server_test.clj" (render "server_test.clj" data)]
+
+             ; src folder
+             ["src/{{sanitized}}/core.clj" (render "core.clj" data)]
+             ["src/{{sanitized}}/db.clj" (render "db.clj" data)]
+             ["src/{{sanitized}}/responses.clj" (render "responses.clj" data)]
+             ["src/{{sanitized}}/html.clj" (render "html.clj" data)]
+             ["src/{{sanitized}}/middleware.clj" (render "middleware.clj" data)]
+             ["src/{{sanitized}}/http.clj" (render "http.clj" data)]
              ["src/{{sanitized}}/server.clj" (render "server.clj" data)]
-             ["test/{{sanitized}}/logic/sessions_test.clj" (render "sessions_test.clj" data)]
-             ["src/{{sanitized}}/logic/sessions.clj" (render "sessions.clj" data)]
-             ["test/{{sanitized}}/logic/users_test.clj" (render "users_test.clj" data)]
+             ["src/{{sanitized}}/utils.clj" (render "utils.clj" data)]
+             ["src/{{sanitized}}/migrations.clj" (render "migrations.clj" data)]
+
+             ; src/users folder
+             ["src/{{sanitized}}/users/db.clj" (render "src/users/db.clj" data)]
+             ["src/{{sanitized}}/users/html.clj" (render "src/users/html.clj" data)]
+             ["src/{{sanitized}}/users/http.clj" (render "src/users/http.clj" data)]
+             ["src/{{sanitized}}/users/logic.clj" (render "src/users/logic.clj" data)]
+
+             ; src/home folder
+             ["src/{{sanitized}}/home/html.clj" (render "src/home/html.clj" data)]
+             ["src/{{sanitized}}/home/http.clj" (render "src/home/http.clj" data)]
+
+             ; src/sessions folder
+             ["src/{{sanitized}}/sessions/html.clj" (render "src/sessions/html.clj" data)]
+             ["src/{{sanitized}}/sessions/http.clj" (render "src/sessions/http.clj" data)]
+             ["src/{{sanitized}}/sessions/logic.clj" (render "src/sessions/logic.clj" data)]
+
+             ; test folder
+             ["test/{{sanitized}}/db_test.clj" (render "test/db_test.clj" data)]
+             ["test/{{sanitized}}/server_test.clj" (render "test/server_test.clj" data)]
+             ["test/{{sanitized}}/sessions/logic_test.clj" (render "test/sessions/logic_test.clj" data)]
+             ["test/{{sanitized}}/users/logic_test.clj" (render "test/users/logic_test.clj" data)]
+
+             ; resources folder
+             ["resources/migrations/{{hstore-mig}}" (render "hstore-mig.edn" data)]
              ["resources/migrations/{{users-mig}}" (render "users-mig.edn" data)]
-             ["src/{{sanitized}}/logic/users.clj" (render "users.clj" data)]
-             ["resources/sql/users.sql" (render "users.sql" data)]
-             ["src/{{sanitized}}/utils.clj" (render "utils.clj" data)])))
+             ["resources/sql/users.sql" (render "users.sql" data)])))
