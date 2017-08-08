@@ -1,4 +1,4 @@
-(defproject majestic-web/lein-template "1.0.0"
+(defproject majestic-web/lein-template "2.0.0"
   :description "The most majestic_web, most monolithic lein template"
   :url "https://github.com/swlkr/majestic_web-web"
   :license {:name "Eclipse Public License"
