@@ -1,4 +1,4 @@
-(ns {{name}}.components
+(ns {{name}}.html
   (:require [hiccup.page :refer [html5 include-css include-js]]
             [hiccup.form :refer [hidden-field text-field submit-button]]
             [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]))
@@ -13,7 +13,7 @@
      (include-js "//cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.min.js")]))
 
 (defn center [& content]
-  [:div {:class "vh-100 flex flex-column justify-center items-center"}
+  [:div {:class "flex flex-column justify-center items-center vh-100"}
    content])
 
 (defn link
@@ -23,8 +23,9 @@
    (link url content nil)))
 
 (defn info [content]
-  [:div {:class "pa3 w-100 mb2 bg-lightest-blue navy tc"}
-   [:span {:class "lh-title"} content]])
+  (when (not (nil? content))
+    [:div {:class "pa3 w-100 mb2 bg-lightest-blue navy tc"}
+     [:span {:class "lh-title"} content]]))
 
 (defn render-optional [optional]
   (if (true? optional)
@@ -43,7 +44,7 @@
 
 (defn input [{:keys [type name value placeholder class]}]
   [:input {:name name
-           :class (str "input-reset ba b--black-20 pa2 mb2 db " (or class "w5"))
+           :class (str "input-reset ba b--black-20 pa2 mb2 db w-100" (or class ""))
            :type type
            :placeholder placeholder
            :value (or value "")}])
