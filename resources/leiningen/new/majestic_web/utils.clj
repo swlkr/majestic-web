@@ -6,36 +6,16 @@
            (java.util UUID)
            (java.util Date)))
 
-(defn uuid [] (str (UUID/randomUUID)))
+(defn uuid [] (UUID/randomUUID))
 
 (defn now []
   (new Date))
-
-(defn throw+
-  ([err]
-   (if (instance? Exception err)
-     (throw err)
-     (throw (ex-info err {}))))
-  ([err data] (throw (ex-info err data))))
-
-(defn flip [f]
-  (fn [x y] (f y x)))
 
 (defn str->int [s]
   (try
     (some-> s bigint int)
     (catch NumberFormatException e
       nil)))
-
-(defn bind-error [f [val err]]
-  (if (nil? err)
-    (f val)
-    [nil err]))
-
-(defmacro err->> [val & fns]
-  (let [fns (for [f fns] `(bind-error ~f))]
-    `(->> [~val nil]
-          ~@fns)))
 
 (defn add-json-to-yesql []
   (extend-type PGobject
@@ -45,3 +25,9 @@
         (if (or (= colType "json")
                 (= colType "jsonb"))
           (json/parse-string (.getValue val) true) val)))))
+
+(defmacro try! [f]
+  `(try
+     [~f nil]
+     (catch Exception e#
+       [nil (.getMessage e#)])))

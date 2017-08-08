@@ -21,8 +21,9 @@
   :main {{name}}.core
   :source-paths ["src"]
   :test-paths ["test"]
-  :aliases {"migrate"          ["run" "-m" "{{name}}.db/migrate"]
-            "rollback"         ["run" "-m" "{{name}}.db/rollback"]
-            "create-migration" ["run" "-m" "{{name}}.db/create-migration"]}
+  :aliases {"db/migrate"   ["run" "-m" "{{name}}.migrations/migrate"]
+            "db/rollback"  ["run" "-m" "{{name}}.migrations/rollback"]
+            "db/migration" ["run" "-m" "{{name}}.migrations/create"]
+            "db/crud"      ["run" "-m" "{{name}}.migrations/crud"]}
   :profiles {:uberjar {:aot :all
                        :uberjar-name "{{name}}.jar"}})

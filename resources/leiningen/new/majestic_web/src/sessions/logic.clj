@@ -1,8 +1,6 @@
-(ns {{name}}.logic.sessions
+(ns {{name}}.sessions.logic
   (:require [buddy.hashers :as hashers]
-            [{{name}}.utils :refer [flip]]
-            [{{name}}.env :as env]
-            [{{name}}.logic.users :as users]))
+            [{{name}}.users.db :as users.db]))
 
 (defn correct-password? [req-pass db-pass]
   (hashers/check req-pass db-pass))
@@ -12,9 +10,9 @@
     ((comp not nil?) user)
     (correct-password? (:password req-user) (:password user))))
 
-(defn create! [{:keys [params]}]
+(defn create! [params]
   (let [{:keys [email password]} params
-        user (users/get-users-by-email {:email email} {:result-set-fn first})]
+        user (first (users.db/find-by-email {:email email}))]
     (if (valid-user? user params)
       [(select-keys user [:id :email]) nil]
       [nil "Invalid email or password"])))

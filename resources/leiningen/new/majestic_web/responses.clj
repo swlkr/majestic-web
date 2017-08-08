@@ -9,7 +9,8 @@
    :headers (merge default-headers headers)})
 
 (defn redirect [url]
-  {:status 302 :body "" :headers {"Location" url}})
+  {:status 302 :body "" :headers {"Location" url
+                                  "Turbolinks-Location" url}})
 
 (def ok (partial response 200))
 (def bad-request (partial response 400))

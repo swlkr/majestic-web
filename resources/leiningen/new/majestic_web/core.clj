@@ -1,6 +1,5 @@
 (ns {{name}}.core
   (:require [{{name}}.server :as server]
-            [{{name}}.env :as env]
             [{{name}}.utils :as utils])
   (:gen-class))
 

@@ -1,25 +1,25 @@
 (ns {{name}}.middleware
-  (:require [buddy.auth :refer [authenticated? throw-unauthorized]]
-            [{{name}}.responses :refer [server-error forbidden redirect]]
-            [{{name}}.components :refer [error-page forbidden-page]]))
+  (:require [buddy.auth :as buddy.auth]
+            [{{name}}.responses :as res]
+            [{{name}}.html :as html]))
 
 (defn wrap-auth [handler]
   (fn [request]
-    (if (authenticated? request)
+    (if (buddy.auth/authenticated? request)
       (handler request)
-      (throw-unauthorized))))
+      (buddy.auth/throw-unauthorized))))
 
 (defn wrap-exceptions [handler]
   (fn [request]
     (try
       (handler request)
       (catch Throwable e
-        (server-error (error-page e))))))
+        (res/server-error (html/error-page e))))))
 
 (defn unauthorized-handler [req metadata]
-  (if (authenticated? req)
-    (forbidden (forbidden-page))
-    (redirect "/login")))
+  (if (buddy.auth/authenticated? req)
+    (res/forbidden (html/forbidden-page))
+    (res/redirect "/login")))
 
 (defn wrap-force-ssl [handler]
   (fn [req]
@@ -28,6 +28,6 @@
       (if (or (= :https (:scheme req))
               (= "https" (headers "x-forwarded-proto")))
         (handler req)
-        (-> (redirect (str "https://" host (:uri req)))
+        (-> (res/redirect (str "https://" host (:uri req)))
             (assoc :status 301))))))
 
